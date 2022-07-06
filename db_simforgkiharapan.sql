@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2022 at 01:44 PM
+-- Generation Time: Jul 06, 2022 at 08:22 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -136,7 +136,8 @@ INSERT INTO `ksp` (`ksp_id`, `wijk_id`, `ksp_nama`) VALUES
 (24, 1, 'III'),
 (26, 2, 'aa'),
 (27, 6, 'Getsemani'),
-(30, 3, 'Tus');
+(30, 3, 'Tus'),
+(31, 1, 'Tus');
 
 -- --------------------------------------------------------
 
@@ -329,7 +330,7 @@ ALTER TABLE `jenisbarang`
 -- AUTO_INCREMENT for table `ksp`
 --
 ALTER TABLE `ksp`
-  MODIFY `ksp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ksp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ruangan`
@@ -347,7 +348,7 @@ ALTER TABLE `unsur`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `wijk`

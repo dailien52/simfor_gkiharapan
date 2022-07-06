@@ -5,7 +5,7 @@
                         </div>
 
                     <!-- <form class="form-horizontal" action="<?=site_url('user/proses')?>" method="post"> -->
-                    <?= form_open_multipart('user/proses'); ?>
+                    <?php echo form_open_multipart('user/proses'); ?>
                         <input type="hidden" name="user_id" value="<?= $row->user_id?>" class="form-control" placeholder="User">
                         
                                 <div class="card-body">
@@ -65,23 +65,6 @@
                                         <?=form_error('user_level')?>
                                     </div>
                                     </div> 
-                                    
-                                    <div class="form-group row">
-                        <div class="col-sm-2">Foto</div>
-                        <div class="col-sm-10">
-                            <div class="row">
-                                <!-- <div class="col-sm-3">
-                                    <img src="<?= base_url('user-file/img/') . $guru['user_foto']; ?>" class="img-thumbnail">
-                                </div> -->
-                                <div class="col-sm-9">
-                                    <div class="custom-file field-img-profile">
-                                        <input type="file" class="custom-file-input file" id="user_foto" name="user_foto">
-                                        <label class="custom-file-label file-label" for="user_foto">Pilih file</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>                                   
 
                                 <div class="border-top">
                                     <div class="card-body">
@@ -91,5 +74,6 @@
                                     </div>
 
                                 </div>
-                            </form>                       
+                                <?php echo form_close() ?>
+                            <!-- </form>                        -->
                     </div>
