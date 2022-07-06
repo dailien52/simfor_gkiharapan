@@ -28,12 +28,10 @@ class User extends CI_Controller {
             $user->username = null;
             $user->password = null;
             $user->user_namalengkap = null;
-            $user->user_foto = null;
             $user->user_level = null;
             $data = array (
                 'page' => 'add',
                 'row' => $user,
-                $user->user_foto = $_FILES['user_foto']
             );
             $data ['halaman'] = 'Tambah Data Master User';
 
@@ -93,7 +91,6 @@ class User extends CI_Controller {
             $user->password = null;
             $user->user_namalengkap = null;
             $user->user_level = null;
-            $user->user_foto = $_FILES['user_foto'];
             $data = array (
                 'page' => 'add',
                 'row' => $user,
@@ -116,20 +113,7 @@ class User extends CI_Controller {
                 $this->template->load('template/template_backend','user/user_form', $data);
             }
             else
-            
             {
-                $user_foto = $_FILES['user_foto'];
-                if($user_foto=''){}else{
-                    $config['upload_path'] = './assets/uploads';
-                    $config['allowed_types'] = 'jpg|jpeg|png';
-    
-                    $this->load->library('upload',$config);
-                    if(!$this->upload->do_upload('user_foto')){
-                        echo "Gagal upload foto"; die();
-                    }else{
-                        $user_foto=$this->upload->data('file_name');
-                    }
-                }
                 $this->user_m->add($post);
                 if($this->db->affected_rows() > 0) {
                     $this->session->set_flashdata('pesan', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Data Berhasil Disimpan</div>');
