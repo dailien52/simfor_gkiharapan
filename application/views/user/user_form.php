@@ -44,6 +44,7 @@
                                         <div class="col-sm-4">
                                         <div class="custom-file">
                                             <input type="file" name="user_foto" value="<?= $row->user_foto?>" class="form-control <?=form_error('user_foto') ? 'form-control is-invalid' : null?>" placeholder="Nama Lengkap">
+                                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                                         </div>
                                         </div>
                                         <?=form_error('user_foto')?>
