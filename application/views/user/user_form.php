@@ -38,18 +38,17 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="card-body">
+                                <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="user_namalengkap" class="col-sm-2 text-left control-label col-form-label">Foto User</label>
+                                        <label for="user_foto" class="col-sm-2 text-left control-label col-form-label">Foto User</label>
                                         <div class="col-sm-4">
                                         <div class="custom-file">
-                                            <input type="file" name="user_namalengkap" value="<?= $row->user_namalengkap?>" class="form-control <?=form_error('user_namalengkap') ? 'form-control is-invalid' : null?>" placeholder="Nama Lengkap">
-                                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                                            <input type="file" name="user_foto" value="<?= $row->user_foto?>" class="form-control <?=form_error('user_foto') ? 'form-control is-invalid' : null?>" placeholder="Nama Lengkap">
                                         </div>
                                         </div>
-                                        <?=form_error('user_namalengkap')?>
+                                        <?=form_error('user_foto')?>
                                     </div>
-                                </div> -->
+                                </div>
 
                                 <div class="card-body">
                                     <div class="form-group row">
