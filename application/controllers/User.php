@@ -42,64 +42,87 @@ class User extends CI_Controller {
 
     // public function add_action() 
     // {
-    //     $this->_rules_add();
 
-    //     if ($this->form_validation->run() == FALSE) {
-    //         $this->add();
-    //     } else {
-    //         $data = array(
-	// 	'username' => $this->input->post('username',TRUE),
-	// 	'password' => md5($this->input->post('password',TRUE)),
-	// 	'user_namalengkap' => $this->input->post('user_namalengkap',TRUE),
-	// 	'user_foto' => $this->input->post('user_foto',TRUE),
-	// 	'user_level' => $this->input->post('user_level',TRUE),
-	//     );
+    //     $config['upload_path']          = './assets/uploads/';
+    //     $config['allowed_types']        = 'gif|jpg|png';
+    //     $config['max_size']             = 10000;
+    //     $config['max_width']            = 10000;
+    //     $config['max_height']           = 10000;
 
+    //     $this->load->library('upload', $config);
 
+    //     if ( ! $this->upload->do_upload('user_foto'))
+    //     {
+            
+    //         echo "Gagal Tambah Gambar";
+
+    //     }
+    //     else
+    //     {
+    //         $user_foto = $this->upload->data();
+    //         $user_foto= $user_foto['file_name'];
+    //         $username = $this->input->post('username', TRUE);
+    //         $password = $this->input->post('password', TRUE);
+    //         $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
+    //         $user_level = $this->input->post('user_level', TRUE);
+
+    //         $data = array (
+    //             'username' => $username,
+    //             'password' => $password,
+    //             'user_namalengkap' => $user_namalengkap,
+    //             'user_level' => $user_level,
+    //             'user_foto' => $user_foto,
+    //         );
     //         $this->user_m->add($data);
     //         $this->session->set_flashdata('message', 'Tambah Data Berhasil');
     //         redirect('user');
+
     //     }
+
     // }
 
     public function add_action() 
     {
         $this->_rules_add();
-
+   
         if ($this->form_validation->run() == FALSE) {
             $this->add();
         } else {
-		$username = $this->input->post('username');
-		$password = md5($this->input->post('password'));
-		$user_namalengkap = $this->input->post('user_namalengkap');
-		$user_level = $this->input->post('user_level');
-        $user_foto = $_FILES['user_foto'];
-        if($user_foto=''){
-        }else{
-            $config['upload_path'] = './assets/uploads';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-
-            $this->load->library('upload',$config);
-            if(!$this->upload->do_upload('user_foto')){
-                echo "Gagal upload foto"; die();
-            }else{
-                $user_foto=$this->upload->data('file_name');
-            }
-        }
-
-        $data = array(
-            'username' => $username,
-            'password' => $password,
-            'user_namalengkap' => $user_namalengkap,
-            'user_level' => $user_level,
-            'user_foto' => $user_foto,
-        );
-
-
-
-            $this->user_m->add($data);
-            $this->session->set_flashdata('message', 'Tambah Data Berhasil');
-            redirect('user');
+           $config['upload_path']          = './assets/uploads/';
+           $config['allowed_types']        = 'gif|jpg|png';
+           $config['max_size']             = 10000;
+           $config['max_width']            = 10000;
+           $config['max_height']           = 10000;
+   
+           $this->load->library('upload', $config);
+   
+           if ( ! $this->upload->do_upload('user_foto'))
+           {
+               
+               echo "Gagal Tambah Gambar";
+   
+           }
+           else
+           {
+               $user_foto = $this->upload->data();
+               $user_foto= $user_foto['file_name'];
+               $username = $this->input->post('username', TRUE);
+               $password = $this->input->post('password', TRUE);
+               $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
+               $user_level = $this->input->post('user_level', TRUE);
+   
+               $data = array (
+                   'username' => $username,
+                   'password' => $password,
+                   'user_namalengkap' => $user_namalengkap,
+                   'user_level' => $user_level,
+                   'user_foto' => $user_foto,
+               );
+               $this->user_m->add($data);
+               $this->session->set_flashdata('message', 'Tambah Data Berhasil');
+               redirect('user');
+   
+           }
         }
     }
 
@@ -140,6 +163,82 @@ class User extends CI_Controller {
         }
     }
 
+    // public function edit_action() 
+    // {
+    //     $this->_rules_edit();
+
+    //     if ($this->form_validation->run() == FALSE) {
+    //         $this->edit($this->input->post('user_id', TRUE));
+    //     } else {
+    //         $data = array(
+	// 	'username' => $this->input->post('username',TRUE),
+	// 	'password' => md5($this->input->post('password',TRUE)),
+	// 	'user_namalengkap' => $this->input->post('user_namalengkap',TRUE),
+	// 	'user_foto' => $this->input->post('user_foto',TRUE),
+	// 	'user_level' => $this->input->post('user_level',TRUE),
+	//     );
+
+    //         $this->user_m->edit($this->input->post('user_id', TRUE), $data);
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //         redirect(site_url('user'));
+    //     }
+    // }    
+
+    // public function edit_action() 
+    // {
+    //     $user_id = $this->input->post('user_id');
+    //     $config['upload_path']          = './assets/uploads/';
+    //     $config['allowed_types']        = 'gif|jpg|png';
+    //     $config['max_size']             = 10000;
+    //     $config['max_width']            = 10000;
+    //     $config['max_height']           = 10000;
+
+    //     $this->load->library('upload', $config);
+
+    //     if ( ! $this->upload->do_upload('user_foto'))
+    //     {
+            
+    //         $username = $this->input->post('username', TRUE);
+    //         $password = $this->input->post('password', TRUE);
+    //         $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
+    //         $user_level = $this->input->post('user_level', TRUE);
+
+    //         $data = array (
+    //             'username' => $username,
+    //             'password' => $password,
+    //             'user_namalengkap' => $user_namalengkap,
+    //             'user_level' => $user_level,
+    //         );
+    //         $this->user_m->edit($data);
+    //         $this->session->set_flashdata('message', 'Tambah Data Berhasil');
+    //         redirect('user');
+
+            
+
+    //     }
+    //     else
+    //     {
+    //         $user_foto = $this->upload->data();
+    //         $user_foto= $user_foto['file_name'];
+    //         $username = $this->input->post('username', TRUE);
+    //         $password = $this->input->post('password', TRUE);
+    //         $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
+    //         $user_level = $this->input->post('user_level', TRUE);
+
+    //         $data = array (
+    //             'username' => $username,
+    //             'password' => $password,
+    //             'user_namalengkap' => $user_namalengkap,
+    //             'user_level' => $user_level,
+    //             'user_foto' => $user_foto,
+    //         );
+    //         $this->user_m->edit($this->input->post('user_id', TRUE), $data);
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //         redirect(site_url('user'));
+
+    //     }
+    // }
+    
     public function edit_action() 
     {
         $this->_rules_edit();
@@ -147,21 +246,61 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->edit($this->input->post('user_id', TRUE));
         } else {
-            $data = array(
-		'username' => $this->input->post('username',TRUE),
-		'password' => md5($this->input->post('password',TRUE)),
-		'user_namalengkap' => $this->input->post('user_namalengkap',TRUE),
-		'user_foto' => $this->input->post('user_foto',TRUE),
-		'user_level' => $this->input->post('user_level',TRUE),
-	    );
+           $user_id = $this->input->post('user_id');
+       $config['upload_path']          = './assets/uploads/';
+       $config['allowed_types']        = 'gif|jpg|png';
+       $config['max_size']             = 10000;
+       $config['max_width']            = 10000;
+       $config['max_height']           = 10000;
 
-            $this->user_m->edit($this->input->post('user_id', TRUE), $data);
-            $this->session->set_flashdata('message', 'Update Record Success');
-            redirect(site_url('user'));
-        }
-    }    
-    
-    public function delete ($id)
+       $this->load->library('upload', $config);
+
+       if ( ! $this->upload->do_upload('user_foto'))
+       {
+           
+           $username = $this->input->post('username', TRUE);
+           $password = $this->input->post('password', TRUE);
+           $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
+           $user_level = $this->input->post('user_level', TRUE);
+
+           $data = array (
+               'username' => $username,
+               'password' => $password,
+               'user_namalengkap' => $user_namalengkap,
+               'user_level' => $user_level,
+           );
+           $this->user_m->edit($this->input->post('user_id', TRUE), $data);
+           $this->session->set_flashdata('message', 'Tambah Data Berhasil');
+           redirect('user');
+
+           
+
+       }
+       else
+       {
+           $user_foto = $this->upload->data();
+           $user_foto= $user_foto['file_name'];
+           $username = $this->input->post('username', TRUE);
+           $password = $this->input->post('password', TRUE);
+           $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
+           $user_level = $this->input->post('user_level', TRUE);
+
+           $data = array (
+               'username' => $username,
+               'password' => $password,
+               'user_namalengkap' => $user_namalengkap,
+               'user_level' => $user_level,
+               'user_foto' => $user_foto,
+           );
+           $this->user_m->edit($this->input->post('user_id', TRUE), $data);
+           $this->session->set_flashdata('message', 'Update Record Success');
+           redirect(site_url('user'));
+
+       }
+    }
+}
+
+     public function delete ($id)
     {
     $this->user_m->delete($id);
     if($this->db->affected_rows() > 0){
