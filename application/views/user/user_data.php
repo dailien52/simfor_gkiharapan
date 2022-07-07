@@ -26,7 +26,11 @@
                                             <td><?=$no++?></td>
                                             <td><?=$data->username?></td>
                                             <td><?=$data->user_namalengkap?></td>
-                                            <td><?=$data->user_foto?></td>
+                                            <td>
+                                               <?php if($data->user_foto != null) {?>
+                                                <img src="<?=base_url('assets/uploads/'.$data->user_foto) ?>" style="width: 100px">
+                                                <?php } ?>
+                                            </td>
                                             <td>
                                             <?php
                                                 if ($data->user_level == 1 ) {

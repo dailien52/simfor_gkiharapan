@@ -23,23 +23,84 @@ class User extends CI_Controller {
 
     public function add ()
     {
-            $user = new stdClass();
-            $user->user_id = null;
-            $user->username = null;
-            $user->password = null;
-            $user->user_namalengkap = null;
-            $user->user_level = null;
-            $data = array (
-                'page' => 'add',
-                'row' => $user,
-            );
+        $data = array(
+            'button' => 'Add',
+            'action' => site_url('user/add_action'),
+	    'user_id' => set_value('user_id'),
+	    'username' => set_value('username'),
+	    'password' => set_value('password'),
+	    'user_namalengkap' => set_value('user_namalengkap'),
+	    'user_foto' => set_value('user_foto'),
+	    'user_level' => set_value('user_level'),
+	        );
             $data ['halaman'] = 'Tambah Data Master User';
 
             //validation
-
-         
                 $this->template->load('template/template_backend','user/user_form', $data);
         
+    }
+
+    // public function add_action() 
+    // {
+    //     $this->_rules_add();
+
+    //     if ($this->form_validation->run() == FALSE) {
+    //         $this->add();
+    //     } else {
+    //         $data = array(
+	// 	'username' => $this->input->post('username',TRUE),
+	// 	'password' => md5($this->input->post('password',TRUE)),
+	// 	'user_namalengkap' => $this->input->post('user_namalengkap',TRUE),
+	// 	'user_foto' => $this->input->post('user_foto',TRUE),
+	// 	'user_level' => $this->input->post('user_level',TRUE),
+	//     );
+
+
+    //         $this->user_m->add($data);
+    //         $this->session->set_flashdata('message', 'Tambah Data Berhasil');
+    //         redirect('user');
+    //     }
+    // }
+
+    public function add_action() 
+    {
+        $this->_rules_add();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add();
+        } else {
+		$username = $this->input->post('username');
+		$password = md5($this->input->post('password'));
+		$user_namalengkap = $this->input->post('user_namalengkap');
+		$user_level = $this->input->post('user_level');
+        $user_foto = $_FILES['user_foto'];
+        if($user_foto=''){
+        }else{
+            $config['upload_path'] = './assets/uploads';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+
+            $this->load->library('upload',$config);
+            if(!$this->upload->do_upload('user_foto')){
+                echo "Gagal upload foto"; die();
+            }else{
+                $user_foto=$this->upload->data('file_name');
+            }
+        }
+
+        $data = array(
+            'username' => $username,
+            'password' => $password,
+            'user_namalengkap' => $user_namalengkap,
+            'user_level' => $user_level,
+            'user_foto' => $user_foto,
+        );
+
+
+
+            $this->user_m->add($data);
+            $this->session->set_flashdata('message', 'Tambah Data Berhasil');
+            redirect('user');
+        }
     }
 
     public function username_check()
@@ -54,22 +115,21 @@ class User extends CI_Controller {
         }
     }
 
-
-
-
     public function edit($id)
     {
-        $query = $this->user_m->get($id);
+        $row = $this->user_m->get_by_id($id);
 
-
-
-
-        if($query->num_rows() > 0){
-            $user = $query->row();
-            $data = array (
-                'page' => 'edit',
-                'row' => $user,
-            );
+        if ($row) {
+            $data = array(
+                'button' => 'Update',
+                'action' => site_url('user/edit_action'),
+		'user_id' => set_value('user_id', $row->user_id),
+		'username' => set_value('username', $row->username),
+		'password' => set_value('password', $row->password),
+		'user_namalengkap' => set_value('user_namalengkap', $row->user_namalengkap),
+		'user_foto' => set_value('user_foto', $row->user_foto),
+		'user_level' => set_value('user_level', $row->user_level),
+	    );
             $data ['halaman'] = 'Edit Data Master User';
             $this->template->load('template/template_backend','user/user_form', $data);
 
@@ -80,82 +140,26 @@ class User extends CI_Controller {
         }
     }
 
-    public function proses()
+    public function edit_action() 
     {
+        $this->_rules_edit();
 
-        $post = $this->input->post(null, TRUE);
-        if(isset($_POST['add'])) {;
-            $user = new stdClass();
-            $user->user_id = null;
-            $user->username = null;
-            $user->password = null;
-            $user->user_namalengkap = null;
-            $user->user_level = null;
-            $data = array (
-                'page' => 'add',
-                'row' => $user,
-            );
-            $data ['halaman'] = 'Tambah Data Master User';
-            $this->form_validation->set_rules('username','Username','required|is_unique[user.username]',
-            array('is_unique' => '%s yang dimasukan sudah digunakan, silahkan ganti')
-            );
-            $this->form_validation->set_rules('password','Password','required|min_length[5]');
-            $this->form_validation->set_rules('user_namalengkap','Nama Lengkap','required');
-            $this->form_validation->set_rules('user_level','Level','required');
-    
-            $this->form_validation->set_message('required', '%s masih kosong, harap isi terlebih dahulu');
-            $this->form_validation->set_message('min_length', '%s minimal berisi 5 karakter');
-    
-            $this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit($this->input->post('user_id', TRUE));
+        } else {
+            $data = array(
+		'username' => $this->input->post('username',TRUE),
+		'password' => md5($this->input->post('password',TRUE)),
+		'user_namalengkap' => $this->input->post('user_namalengkap',TRUE),
+		'user_foto' => $this->input->post('user_foto',TRUE),
+		'user_level' => $this->input->post('user_level',TRUE),
+	    );
 
-            if ($this->form_validation->run() == FALSE)
-            {
-                $this->template->load('template/template_backend','user/user_form', $data);
-            }
-            else
-            {
-                $this->user_m->add($post);
-                if($this->db->affected_rows() > 0) {
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Data Berhasil Disimpan</div>');
-                }
-                redirect('user');
-                
-            }
-
-        } else if(isset($_POST['edit'])) {
-
-            $this->form_validation->set_rules('username','Username','required|callback_username_check');
-            if($this->input->post('password')) {
-            $this->form_validation->set_rules('password','Password','min_length[5]'); }
-            $this->form_validation->set_rules('user_namalengkap','Nama Lengkap','required');
-            $this->form_validation->set_rules('user_level','Level','required');
-    
-            $this->form_validation->set_message('required', '%s masih kosong, harap isi terlebih dahulu');
-            $this->form_validation->set_message('min_length', '%s minimal berisi 5 karakter');
-    
-            $this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
-
-            if ($this->form_validation->run() == FALSE)
-            {
-                $this->edit($post['user_id']);
-            }
-            else
-            {
-                $this->user_m->edit($post);
-                if($this->db->affected_rows() > 0) {
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Data Berhasil Disimpan</div>');
-                }
-                redirect('user');
-            }
-            
-           
+            $this->user_m->edit($this->input->post('user_id', TRUE), $data);
+            $this->session->set_flashdata('message', 'Update Record Success');
+            redirect(site_url('user'));
         }
-
-        
-       
-
-    }
-
+    }    
     
     public function delete ($id)
     {
@@ -166,6 +170,40 @@ class User extends CI_Controller {
         redirect('user');
 
     }
+
+    public function _rules_add() 
+    {
+        $this->form_validation->set_rules('username','Username','required|is_unique[user.username]',
+        array('is_unique' => '%s yang dimasukan sudah digunakan, silahkan ganti')
+        );
+        $this->form_validation->set_rules('password','Password','required|min_length[5]');
+        $this->form_validation->set_rules('user_namalengkap','Nama Lengkap','required');
+        $this->form_validation->set_rules('user_level','Level','required');
+
+        $this->form_validation->set_message('required', '%s masih kosong, harap isi terlebih dahulu');
+        $this->form_validation->set_message('min_length', '%s minimal berisi 5 karakter');
+
+        $this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
+    }
+
+    public function _rules_edit() 
+    {
+        $this->form_validation->set_rules('username','Username','required|callback_username_check');
+        if($this->input->post('password')) {
+            $this->form_validation->set_rules('password','Password','min_length[5]'); }
+
+    
+        $this->form_validation->set_rules('user_namalengkap','Nama Lengkap','required');
+        $this->form_validation->set_rules('user_level','Level','required');
+
+        $this->form_validation->set_message('required', '%s masih kosong, harap isi terlebih dahulu');
+        $this->form_validation->set_message('min_length', '%s minimal berisi 5 karakter');
+
+        $this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
+    }
+
+
+
 
 }
 

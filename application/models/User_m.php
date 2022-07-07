@@ -23,29 +23,23 @@ class User_m extends CI_Model {
         return $query;
     }
 
-    public function add($post)
+    function get_by_id($id)
     {
-        $params = [
-            'username' => $post['username'],
-            'password' => md5 ($post['password']),
-            'user_namalengkap' => $post['user_namalengkap'],
-            'user_foto' => $post['user_foto'],
-            'user_level' => $post['user_level']
-        ];
-        $this->db->insert('user', $params);
+        $this->db->where('user_id', $id);
+        return $this->db->get('user')->row();
+    }
+
+    public function add($data)
+    {
+        $this->db->insert('user', $data);
     }    
 
-    public function edit($post)
+    public function edit($id, $data)
     {
-        $params = [
-            'username' => $post['username'],
-            'password' => md5 ($post['password']),
-            'user_namalengkap' => $post['user_namalengkap'],
-            'user_level' => $post['user_level'],
-        ];
-        $this->db->where('user_id', $post['user_id']);
-        $this->db->update('user', $params);
-    }    
+        $this->db->where('user_id', $id);
+        $this->db->update('user', $data);
+    }
+   
 
    
 
