@@ -23,7 +23,8 @@
   </style>
 </head>
 <body>
-  <img src="assets/logo-gki.png" style="position: absolute; width: 140px; height: auto;">
+  <!-- <img src="./assets/img/logo-gki.PNG" style="position: absolute; width: 140px; height: auto;"> -->
+  <img src="<?=base_url()?>/assets/img/logo-gki.PNG" style="position: absolute; width: 140px; height: auto;">
   <table style="width: 100%;">
     <tr>
       <td align="center">
