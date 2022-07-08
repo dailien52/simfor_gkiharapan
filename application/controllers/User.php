@@ -107,7 +107,7 @@ class User extends CI_Controller {
                $user_foto = $this->upload->data();
                $user_foto= $user_foto['file_name'];
                $username = $this->input->post('username', TRUE);
-               $password = $this->input->post('password', TRUE);
+               $password = md5($this->input->post('password', TRUE));
                $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
                $user_level = $this->input->post('user_level', TRUE);
    
@@ -259,7 +259,7 @@ class User extends CI_Controller {
        {
            
            $username = $this->input->post('username', TRUE);
-           $password = $this->input->post('password', TRUE);
+           $password = md5($this->input->post('password', TRUE));
            $user_namalengkap = $this->input->post('user_namalengkap', TRUE);
            $user_level = $this->input->post('user_level', TRUE);
 
